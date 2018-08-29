@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  tasks:
+    #Create a docker image for keycloak configured with python based on Dockerifle at docker
+    - docker_image:
+        path: docker
+        name: keycloak:ansible
+    #Launch a container based on the image we just created
+    - docker_container:
+        name: keycloak.custom
+        image: keycloak:ansible
+        env:
+          KEYCLOAK_USER: admin
+          KEYCLOAK_PASSWORD: admin
+        published_ports:
+          - 8080:8080
+          - 8443:8443
